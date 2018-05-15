@@ -41,14 +41,14 @@ assign_hospital2site = over(lonlat, s_poly)
 
 travel_time <- array(dim = c(1666,1666,300))
 
-for (First_Site_ID in c(1:10)){ # these should be all sites 
+for (First_Site_ID in c(1:10)){ # these should be close sites 
   for (Sec_Site_ID in c(assign_hospital2site$z)){ # these should be the sites that have health facilities
     
     nummer = 0 # initialize count of travels with this Site combination (see use below)
     
-    for (i in 1:max(rawmobility$user_ID)){ # for every user seperate data.frame to work on
+    for (i in 1:max(rawmobility_subset$user_ID)){ # for every user seperate data.frame to work on
       #print(i)
-      user = subset(rawmobility, user_ID == i) 
+      user = subset(rawmobility_subset, user_ID == i) 
       if (nrow(user) == 0){break}
       #print(user)
       S = NA # set travel start time to NA
