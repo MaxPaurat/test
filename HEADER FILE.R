@@ -31,6 +31,8 @@ library(plyr)
 library(rpanel)
 library(lattice)
 library(latticeExtra)
+library(geosphere)
+library(pdist)
 
 # Read in Data
 source("Read in Data.r")
