@@ -66,6 +66,18 @@ colnames(SenegalHospitals)[colnames(SenegalHospitals)=="z"] <- "site_ID"
 # - seperate analysis into Dakar, Rest and South (like in Orange paper)
 # - use lapply functions
 # - ! ask feuerriegel for input
+
+# Calculate which hospital is closest to antennas
+
+source("Closest Hospitals Matrix.r")
+
+
+
+# Calculate traveltime for antennas closest to Louga Hospital
+
+
+
+
 subset = Louga_subset
 included_sites = keep_site$ids
 included_hospitals_sites = 855 # Louga site_ID

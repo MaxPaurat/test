@@ -19,6 +19,7 @@ antennalocations = read.csv("Data\\Challenge Data\\ContextData\\SITE_ARR_LONLAT.
 
 # Hospital locations
 SenegalHospitals <- read_excel("Data/Edwards Data/SenegalHospitals.xlsx")
+SenegalHospitals$new_id = 1:40
 
 # Country borders 
 SEN <- readOGR(dsn = "Data/Edwards Data/Input Data Edward", layer = "SEN_outline")

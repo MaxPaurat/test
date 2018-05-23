@@ -39,17 +39,34 @@ source("Read in Data.r")
 # Connect Datasets
 source("Connect Datasets.r")
 
+#------Opinion needed here-----------########################################
 # Do calculations on data 
 #source("histograms of traveltimes to hospitals.r")
-
-#------Opinion needed here-----------########################################
-#source("Towards efficient traveltimes.r")
 #------------------------------------########################################
+
 
 # plot a coloured map -- function input: colour varies by input variable (vector)
 
 source("coloured map.r")
 
-z = 1:1668
-colouredmapfunct(z)
+#z = 1:1668
+
+# z = vector(length = 1668)
+# for (i in 1:1668) {
+#   if (i %in% as.numeric(keep_site))
+#   {z[i] = TRUE}
+# }
+
+z = vector(length = 1668)
+for (i in 1:1668) {
+  if (i %in% as.numeric(keep_site$site_ID))
+  {z[i] = TRUE}
+}
+z= as.numeric(z)
+
+s_poly@data$z = z
+p = spplot(s_poly, "z")
+print(p)
+
+#colouredmapfunct(z)
 

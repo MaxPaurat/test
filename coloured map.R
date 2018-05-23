@@ -4,9 +4,10 @@
 colouredmapfunct = function(z){
 
 #plot with colour
-p = spplot(s_poly, zcol="z")
+p = spplot(s_poly,"z")
 print(p)
 
+#plot hospital locations
 # add some data here while traveltimes are not running
 lon = SenegalHospitals$lon
 lat = SenegalHospitals$lat
@@ -15,7 +16,7 @@ lonlat = SpatialPoints(cbind(lon,lat))
 
 hospitallocations = SpatialPointsDataFrame(lonlat, data = as.data.frame(SenegalHospitals$id))
 
-#plot hospital locations
+#plot
 p + layer(panel.points(SenegalHospitals$lon, SenegalHospitals$lat, col="green", pch=19), data=hospitallocations)
 
 }
