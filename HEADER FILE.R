@@ -11,7 +11,6 @@
 #   - (not neccessary now, data input should be fine) try running everything on a different NO machine (also makes me install everything on a second machine)
 #   - Done- replace direct paths with a way that is compatible independent of person running it <- DONE FOR Read in Data.R
 #   - get data to feuerriegel and ken (use file structure as on ETH machine)
-#     - upload data to git?
 #     -(best to keep structure) share all data with Feuerriegel via polybox?
 # - test whether everything is working with clean slate RStudio
 # - commit working version to git

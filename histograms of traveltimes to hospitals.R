@@ -36,6 +36,10 @@ hospitallocations = SpatialPointsDataFrame(lonlat, data = as.data.frame(SenegalH
 
 assign_hospital2site = over(lonlat, s_poly)
 
+SenegalHospitals = cbind(SenegalHospitals, assign_hospital2site)
+
+colnames(SenegalHospitals)[colnames(SenegalHospitals)=="z"] <- "site_ID"
+
 #spplot(hospitallocations)
 
 
@@ -62,24 +66,29 @@ assign_hospital2site = over(lonlat, s_poly)
 # - seperate analysis into Dakar, Rest and South (like in Orange paper)
 # - use lapply functions
 # - ! ask feuerriegel for input
+subset = Louga_subset
+included_sites = keep_site$ids
+included_hospitals_sites = 855 # Louga site_ID
+travel_limit = 10
+travel_time_Louga <- array(dim = c(1666,1,travel_limit))
+travel_time = travel_time_Louga
 
-
-travel_time <- array(dim = c(1666,1666,300))
-
-for (First_Site_ID in c(1:10)){ # these should be all sites 
-  for (Sec_Site_ID in c(assign_hospital2site$z)){ # these should be the sites that have health facilities
+for (First_Site_ID in included_sites){ # these should be all sites 
+  for (Sec_Site_ID in included_hospitals_sites){ # these should be the sites that have health facilities
     
     nummer = 0 # initialize count of travels with this Site combination (see use below)
     
-    for (i in 1:max(rawmobility$user_ID)){ # for every user seperate data.frame to work on
+    for (i in subset$user_ID){ # for every user seperate data.frame to work on
       #print(i)
-      user = subset(rawmobility, user_ID == i) 
+      user = subset(subset, user_ID == i) 
       if (nrow(user) == 0){break}
       #print(user)
       S = NA # set travel start time to NA
       
       for (counter in 1:nrow(user)){ # for all observations of the user (call/sms at a site)
        #print(counter)
+        print(nummer)
+        if (nummer = travel_limit){print("enough travels for this site combination") break} #stop searching for more travels if limit is reached
         if (user[counter, ]$site_ID == First_Site_ID){ # if user visits first site 
           S = user[counter, ]$timestamp # save travel starttime and date (this gets replaced by the last time the person is at the site)
           #print("I found one!!!")
@@ -97,7 +106,7 @@ for (First_Site_ID in c(1:10)){ # these should be all sites
     print("done looping")
     if (nummer != 0 ){ 
       #plot histograms
-      #hist(travel_time[First_Site_ID, Sec_Site_ID, ], breaks = 0:(max(travel_time[First_Site_ID, Sec_Site_ID, ]+2, na.rm = TRUE)))
+      hist(travel_time[First_Site_ID, Sec_Site_ID, ], breaks = 0:(max(travel_time[First_Site_ID, Sec_Site_ID, ]+2, na.rm = TRUE)))
     }
   }
 }
