@@ -20,6 +20,7 @@ voronoipolygons <- function(x,poly) {
   rw = as.numeric(t(bb))
   z <- deldir(crds[,1], crds[,2],rw=rw)
   w <- tile.list(z)
+  w[1]
   polys <- vector(mode='list', length=length(w))
   require(sp)
   for (i in seq(along=polys)) {
@@ -47,3 +48,5 @@ value_df= data.frame(z)
 
 #combine to SpatialPolygonsDataFrame with values for each antenna area that can be mapped to coloures
 s_poly <- SpatialPolygonsDataFrame(gg, value_df, match.ID = FALSE)
+
+load("sitelocations_file.Rdata")

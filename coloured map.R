@@ -4,6 +4,7 @@
 colouredmapfunct = function(z){
 
 #plot with colour
+s_poly@data$z = z
 p = spplot(s_poly,"z")
 print(p)
 

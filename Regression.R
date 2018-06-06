@@ -17,3 +17,24 @@
 # . create Readme to give instructions to feuerriegel
 # . invite Feuerriegel to github
 # . write/meet feuerriegel
+
+# Later:
+# . Make files into functions?
+
+
+source("HEADER FILE.R")
+
+# Calculate which hospital is closest to which antennas
+source("Closest Hospitals Matrix.r")
+
+#Generate mobility dataset around Louga (subset of rawmobility)
+source("Mobility_Subset_louga.R")
+
+# Filling travel_time for Louga area
+source("histograms of traveltime to hospitals.R")
+
+# 
+source("extract typical traveltimes from histograms.R")
+
+source("run Regression.R")
+

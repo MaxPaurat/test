@@ -49,13 +49,7 @@ source("Connect Datasets.r")
 
 source("coloured map.r")
 
-#z = 1:1668
-
-# z = vector(length = 1668)
-# for (i in 1:1668) {
-#   if (i %in% as.numeric(keep_site))
-#   {z[i] = TRUE}
-# }
+#Display Louga subset as map
 
 z = vector(length = 1668)
 for (i in 1:1668) {
@@ -64,9 +58,6 @@ for (i in 1:1668) {
 }
 z= as.numeric(z)
 
-s_poly@data$z = z
-p = spplot(s_poly, "z")
-print(p)
+colouredmapfunct(z)
 
-#colouredmapfunct(z)
 

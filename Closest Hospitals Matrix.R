@@ -4,7 +4,7 @@
 
 # Matrix rows site ID
 # collumns hospitals id
-df_sites = data.frame(antennalocations$lon, antennalocations$lat)
+df_sites = data.frame(sitelocations[,"lon"], sitelocations[,"lat"])
 df_hosp = data.frame(SenegalHospitals$lon, SenegalHospitals$lat)
 
 distance.matrix = distm(df_sites, df_hosp, fun=distVincentyEllipsoid)
