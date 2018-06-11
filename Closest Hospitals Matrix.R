@@ -19,3 +19,6 @@ for (v in (1:nrow(distance.matrix))){
   closest_hospitals[v,]<- ordered[1:5]
 }  
 closest_hospitals = as.data.frame(closest_hospitals)
+
+site_ID = 1:1668
+closest_hospitals = cbind(closest_hospitals,site_ID)

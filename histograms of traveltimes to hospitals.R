@@ -78,13 +78,30 @@ colnames(SenegalHospitals)[colnames(SenegalHospitals)=="z"] <- "site_ID"
 # in general form change the 1 to Sec_Site_ID here -> travel_time[First_Site_ID, 1, nummer] = as.numeric(as.POSIXct(E, format = "%Y-%...
 
 # can be extended to count a journey in the opposing direction 
-subset = Louga_subset
-included_sites = keep_test$site_ID[1:41] #855 #keep_test$site_ID[17:41]
-included_hospitals_sites = 855  #866 #855 # Louga site_ID
+
+calc_hospitals_sites = function (hospsite_number){
+
+  #if (keep_site$hosp_number[1] != hospsite_number){
+  keep_site = closest_hospitals[closest_hospitals[,1] == hospsite_number,]
+  keep_site$hosp_number = hospsite_number
+  
+  print("Calculating histograms for these sites:")
+  print(keep_site)
+  
+  subset = subset(rawmobility, rawmobility$site_ID %in% as.numeric(keep_site$site_ID))
+  print(paste("generated subset of hospital ", hospsite_number))
+  #}
+
+return(keep_site)
+}
+
+
+trtime_hist = function(hospsite_number){
+included_sites = keep_site$site_ID[!keep_site$site_ID %in% included_hospitals_sites] #855 #keep_site$site_ID[17:41]
+included_hospitals_sites = hospsite_number  #866 #855 # Louga site_ID
 travel_limit = 300 #limit number of entries of travel instances
-travel_time_Louga <- array(dim = c(1666,1,travel_limit))
-#travel_time_test = vector(mode = "numeric", travel_limit)
-travel_time = travel_time_Louga
+
+travel_time <- array(dim = c(1666,1,travel_limit))
 travel_instance_new = 0
 unique_user_IDs = unique(subset$user_ID)
 
@@ -131,13 +148,13 @@ for (First_Site_ID in included_sites){ # these should be all sites
           travel_time[First_Site_ID, 1, nummer] = difftime(as.POSIXct(E, format = "%Y-%m-%d %H:%M:%S"), as.POSIXct(S, format = "%Y-%m-%d %H:%M:%S"), unit = "min") #as.Date(E) - as_Date(S)) #calculate travel time as difference of S and E
           print("Found the travel nummer:")
           print(nummer)
-          # print("and time (in min)")
-          # print(travel_time[First_Site_ID, 1, nummer])
+          print("and time (in min)")
+          print(travel_time[First_Site_ID, 1, nummer])
           # print("counter:")
           # print(counter)
-          # print("Rows of Start and Endtimes")
-          # print(S_row)
-          # print(E_row)
+          print("Rows of Start and Endtimes")
+          print(S_row)
+          print(E_row)
           
           nummer = nummer + 1
           #print("I found one!!!")
@@ -158,7 +175,7 @@ for (First_Site_ID in included_sites){ # these should be all sites
     }else{
     # hist(travel_time[First_Site_ID, 1, ], breaks = 0:(max(travel_time[First_Site_ID, 1, ]+2, na.rm = TRUE)))
      
-     # hist(travel_time[First_Site_ID, 1, ], col="grey",  main = paste("Histogram of Site" , First_Site_ID))# prob=TRUE for probabilities not counts
+     #hist(travel_time[First_Site_ID, 1, ], col="grey",  main = paste("Histogram of Site" , First_Site_ID))# prob=TRUE for probabilities not counts
       
       # histogram = qplot(dataset,
       #       geom="histogram",
@@ -187,8 +204,9 @@ for (First_Site_ID in included_sites){ # these should be all sites
     }
   }
 }
-print("done")
 
+print("done")
+} # function definition end
 
 # Solving the problems
 # Options:
