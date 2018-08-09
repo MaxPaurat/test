@@ -24,17 +24,38 @@
 
 source("HEADER FILE.R")
 
-# Calculate which hospital is closest to which antennas
-source("Closest Hospitals Matrix.r")
+# Calculate which hospital is closest to which antennas, IS SAVED
+#source("Closest Hospitals Matrix.r")
 
-#Generate mobility dataset around Louga (subset of rawmobility)
-source("Mobility_Subset_louga.R")
+# #Generate mobility dataset around Louga (subset of rawmobility)
+# source("Mobility_Subset_louga.R")§§
 
-# Filling travel_time for Louga area
-source("histograms of traveltime to hospitals.R")
+# Filling "travel_time" array for Louga area
+source("histograms of traveltimes to hospitals.R")
 
+hospital_number = 22
+First_Site_ID = 856
+
+keep_site = calc_hospitals_sites(hospital_number)
+sub = calc_hospitals_rawmobility_subset(hospital_number, keep_site = keep_site)
+travel_time = trtime_hist(hospital_number, sub = sub)
+
+
+load(file=paste("Data_histogram_hospital_", hospital_number, "_Site_", 856, ".RData",sep=""))
+
+
+#Display Louga subset as map
+
+z = vector(length = 1668)
+for (i in 1:1668) {
+  if (i %in% as.numeric(keep_site$site_ID))
+  {z[i] = TRUE}
+}
+z= as.numeric(z)
+
+colouredmapfunct(z)
+# # 
+# source("extract typical traveltimes from histograms.R")
 # 
-source("extract typical traveltimes from histograms.R")
-
-source("run Regression.R")
+# source("run Regression.R")
 

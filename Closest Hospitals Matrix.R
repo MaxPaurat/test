@@ -22,3 +22,5 @@ closest_hospitals = as.data.frame(closest_hospitals)
 
 site_ID = 1:1668
 closest_hospitals = cbind(closest_hospitals,site_ID)
+
+save(closest_hospitals, file= "closest_hospitals.Rdata")

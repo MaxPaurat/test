@@ -79,31 +79,46 @@ colnames(SenegalHospitals)[colnames(SenegalHospitals)=="z"] <- "site_ID"
 
 # can be extended to count a journey in the opposing direction 
 
-calc_hospitals_sites = function (hospsite_number){
+calc_hospitals_sites = function (hospital_number){
+  
+  load("closest_hospitals.RData")
 
-  #if (keep_site$hosp_number[1] != hospsite_number){
-  keep_site = closest_hospitals[closest_hospitals[,1] == hospsite_number,]
-  keep_site$hosp_number = hospsite_number
+  #if (keep_site$hosp_number[1] != hospital_number){
+  keep_site = closest_hospitals[closest_hospitals[,1] == hospital_number,]
+  keep_site$hosp_number = hospital_number
   
-  print("Calculating histograms for these sites:")
-  print(keep_site)
-  
-  subset = subset(rawmobility, rawmobility$site_ID %in% as.numeric(keep_site$site_ID))
-  print(paste("generated subset of hospital ", hospsite_number))
+  sub = subset(rawmobility, rawmobility$site_ID %in% as.numeric(keep_site$site_ID))
+  print(paste("generated subset of hospital ", hospital_number))
   #}
 
 return(keep_site)
 }
 
+source("find_hospitals_site.R")
 
-trtime_hist = function(hospsite_number){
-included_sites = keep_site$site_ID[!keep_site$site_ID %in% included_hospitals_sites] #855 #keep_site$site_ID[17:41]
+calc_hospitals_rawmobility_subset = function (hospital_number, keep_site){
+  
+sub = subset(rawmobility, rawmobility$site_ID %in% as.numeric(keep_site$site_ID))
+print(paste("generated subset of hospital ", hospital_number))
+return(sub)
+
+}
+
+trtime_hist = function(hospital_number, sub){
+
+print("Calculating histograms for these sites:")
+#print(keep_site)
+  
+# Find hospsite_number from hospital number
+hospsite_number = find_hospitals_site(hospital_number = hospital_number)
+
 included_hospitals_sites = hospsite_number  #866 #855 # Louga site_ID
+included_sites = keep_site$site_ID[!keep_site$site_ID %in% included_hospitals_sites] #855 #keep_site$site_ID[17:41]
 travel_limit = 300 #limit number of entries of travel instances
 
 travel_time <- array(dim = c(1666,1,travel_limit))
 travel_instance_new = 0
-unique_user_IDs = unique(subset$user_ID)
+unique_user_IDs = unique(sub$user_ID)
 
 for (First_Site_ID in included_sites){ # these should be all sites 
   for (Sec_Site_ID in included_hospitals_sites){ # these should be the sites that have health facilities
@@ -119,7 +134,7 @@ for (First_Site_ID in included_sites){ # these should be all sites
       
       # print("user_ID is ")
       # print(i)
-      user = subset(subset, user_ID == i) # for every user seperate data.frame to work on
+      user = subset(sub, user_ID == i) # for every user seperate data.frame to work on
       if (nrow(user) == 0){break}
       #print(user)
       S = NA # set travel start time to NA
@@ -186,14 +201,23 @@ for (First_Site_ID in included_sites){ # these should be all sites
       # print(histogram)
       # ggplot(data=dataset, aes(x= travel_time[First_Site_ID, 1,])) + geom_histogram()
       
-      histogram = ggplot(dataset, aes(dataset$time)) +
+      histo = ggplot(dataset, aes(dataset$time)) +
         geom_histogram(binwidth = 30) +
         geom_density(bw = 30) +
         ggtitle(paste("Histogram for Site ", First_Site_ID, " the ", sitecount, "antenna in this subset")) +
         labs(x="traveltime (min)") +
-        coord_cartesian(xlim = (c(0,1440))) 
-                        
-      print(histogram)
+        coord_cartesian(xlim = (c(0,2880))) 
+      
+      
+      
+      assign(x=paste("histogram_hospital_", hospital_number,"_Site_", First_Site_ID, sep=""), histo)
+      assign(x=paste("Data_histogram_hospital_", hospital_number,"_Site_", First_Site_ID, sep=""), dataset)
+      
+      save(list = paste("Data_histogram_hospital_", hospital_number,"_Site_", First_Site_ID, sep=""), file = paste("Data_histogram_hospital_", hospital_number,"_Site_", First_Site_ID,".RData", sep=""))
+      ggsave(filename = paste("histogram_hospital_", hospital_number,"_Site_", First_Site_ID, ".pdf", sep=""), plot = histo, device="pdf") 
+                       
+      print(histo)
+      
       
       # dataset = as.data.frame(travel_time[First_Site_ID, 1, ])
       # histogram = ggplot(dataset, aes(x = X)) + 
@@ -206,6 +230,7 @@ for (First_Site_ID in included_sites){ # these should be all sites
 }
 
 print("done")
+return(travel_time)
 } # function definition end
 
 # Solving the problems

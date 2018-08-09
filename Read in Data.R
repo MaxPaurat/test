@@ -8,7 +8,7 @@ plot(DHSshapefile)
 ##### Mobile Data #####
 
 # Mobility data
-rawmobility = read.csv( "Data\\Challenge Data\\SET2\\SET2_P01small.CSV", header = FALSE)
+rawmobility = read.csv( "Data\\Challenge Data\\SET2\\SET2_P01.CSV", header = FALSE)
 colnames(rawmobility) = c("V1"="user_ID", "V2"="timestamp", "V3"="site_ID")
 rawmobility$timestamp = as.character(rawmobility$timestamp)
 

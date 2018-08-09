@@ -45,19 +45,10 @@ source("Connect Datasets.r")
 #------------------------------------########################################
 
 
-# plot a coloured map -- function input: colour varies by input variable (vector)
+# load function to plot a coloured map -- function input: colour varies by input variable (vector)
 
 source("coloured map.r")
 
-#Display Louga subset as map
 
-z = vector(length = 1668)
-for (i in 1:1668) {
-  if (i %in% as.numeric(keep_site$site_ID))
-  {z[i] = TRUE}
-}
-z= as.numeric(z)
-
-colouredmapfunct(z)
 
 
