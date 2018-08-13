@@ -5,10 +5,13 @@
 DHSshapefile = readOGR("Data\\DHS Senegal 2012-13\\Stata\\SNGE6AFL","SNGE6AFL")
 plot(DHSshapefile)
 
+# Continous DHS 2012/2013
+SNHR6DFL <- read_dta("~/GitHub/test/Data/DHS Senegal 2012-13/Stata/SNHR6DDT/SNHR6DFL.DTA")
+
 ##### Mobile Data #####
 
 # Mobility data
-rawmobility = read.csv( "Data\\Challenge Data\\SET2\\SET2_P01.CSV", header = FALSE)
+#rawmobility = read.csv( "Data\\Challenge Data\\SET2\\SET2_P01.CSV", header = FALSE)
 colnames(rawmobility) = c("V1"="user_ID", "V2"="timestamp", "V3"="site_ID")
 rawmobility$timestamp = as.character(rawmobility$timestamp)
 
