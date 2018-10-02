@@ -1,0 +1,1 @@
+﻿Get-Content -First 100 'C:\Users\Max\Documents\polybox\Masterthesis Mobile Data\Projekte\Masterthesis Mobile Data\test\Data - temporary place to copy to WCP for current computation\SET1V_01.csv'
