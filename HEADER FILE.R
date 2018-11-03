@@ -23,15 +23,16 @@
 
 library(readxl)
 library(rgdal)
-library(deldir)
+library(deldir) # -> not (yet) on cluster
 library(ggplot2)
-library(rgeos)
+library(rgeos) # -> not (yet) on cluster
 library(dplyr)
-library(rpanel)
+library(rpanel)# -> not (yet) on cluster
 library(lattice)
 library(latticeExtra)
-library(geosphere)
-library(pdist)
+library(geosphere) # -> not (yet) on cluster
+library(pdist)  # -> not (yet) on cluster
+# some locally installed on cluster (test, when nessessary contact cluster support)
 
 # Read in Data
 source("Read in Data.r")

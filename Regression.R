@@ -120,7 +120,7 @@ lm.2 = lm(rate_of_home_births ~ average_years_of_education + callactivity_calldu
 lm.2
 
 # remember displacement 2km for urban and 5km for rural
-# to estimate the effect, create statistics of sizes of width and height of voronoi polygons
+# to estimate the effect, create statistics of sizes of width and height of voronoi polygons (my idea, but there is an approach in Burgert 2014)
 
 # Going full berserk
 # attacking the indicators
@@ -133,7 +133,8 @@ lm.2
 # - match mobility and indicators (makes sure the same numbers appear is both user_id collumns)
 # 
 
-
+# Notes from SAR11
+# 
 
 # To do
 
